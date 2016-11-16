@@ -1,0 +1,12 @@
+{
+  "name": "jcms",
+  "dependencies": {
+    "jquery": "^2.0",
+    "bootstrap": "^3.3.*",
+    "fontawesome": "~4.*",
+    "summernote": "^0.8.2",
+    "startbootstrap-sb-admin-2": "brd-sb-admin-2#^3.3.7+1",
+    "clean-blog": "^1.0.1",
+    "AdminLTE": "admin-lte#^2.3.8"
+  }
+}
