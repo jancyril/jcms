@@ -20,13 +20,15 @@ elixir(mix => {
         'fontawesome/css/font-awesome.css',
         'AdminLTE/dist/css/AdminLTE.css',
         'AdminLTE/plugins/iCheck/square/blue.css',
-        'pnotify/dist/pnotify.css'
+        'pnotify/dist/pnotify.css',
+        'nprogress/nprogress.css'
     ], 'public/css/login.css', 'bower_components/');
 
     mix.scripts([
         'jquery/dist/jquery.js',
         'AdminLTE/plugins/iCheck/icheck.min.js',
         'pnotify/dist/pnotify.js',
+        'nprogress/nprogress.js',
         'vue/dist/vue.js',
         'vue-resource/dist/vue-resource.js'
     ], 'public/js/login.js', 'bower_components/');

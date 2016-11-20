@@ -5,11 +5,14 @@
     "bootstrap": "^3.3.*",
     "fontawesome": "~4.*",
     "summernote": "^0.8.2",
-    "startbootstrap-sb-admin-2": "brd-sb-admin-2#^3.3.7",
     "clean-blog": "^1.0.1",
     "AdminLTE": "admin-lte#^2.3.8",
     "vue": "^2.0.7",
     "vue-resource": "^1.0.3",
-    "pnotify": "^3.0.0"
+    "pnotify": "^3.0.0",
+    "nprogress": "^0.2.0"
+  },
+  "resolutions": {
+    "font-awesome": "~4.6.3"
   }
 }
