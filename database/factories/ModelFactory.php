@@ -11,13 +11,13 @@
 |
 */
 
-$factory->define(Janitor\User::class, function (Faker\Generator $faker) {
-    static $password;
-
+$factory->define(Janitor\Models\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
+        'firstname' => $faker->firstName,
+        'lastname' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'password' => str_random(20),
+        'photo' => str_random(10).'.jpg',
         'remember_token' => str_random(10),
     ];
 });
