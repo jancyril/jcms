@@ -1,0 +1,15 @@
+language: php
+
+php: 
+  - '7.0'
+
+addons:
+  mariadb: '10.1'
+
+before_script:
+  - mysql -e 'create database jcms_test;'
+
+script:
+  - composer install
+  - mv env.testing .env
+  - phpunit
