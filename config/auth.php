@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Janitor\User::class,
+            'model' => Janitor\Models\User::class,
         ],
 
         // 'users' => [
