@@ -21,8 +21,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin::', 'm
     Route::post('login', 'LoginController@login')->name('post-login');
 });
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin::'], function () {
-    Route::get('dashboard', function () {
-        return 'dashboard';
-    })->name('dashboard');
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
+    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 });
