@@ -12,4 +12,5 @@ before_script:
 script:
   - composer install
   - mv env.testing .env
+  - php artisan migrate
   - phpunit
