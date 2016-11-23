@@ -14,6 +14,29 @@ require('laravel-elixir-vue-2');
  */
 
 elixir(mix => {
+    // Admin Dashboard Assets
+    mix.styles([
+        'bootstrap/dist/css/bootstrap.css',
+        'fontawesome/css/font-awesome.css',
+        'pnotify/dist/pnotify.css',
+        'nprogress/nprogress.css',
+        'Ionicons/css/ionicons.css',
+        'AdminLTE/dist/css/AdminLTE.css',
+        'AdminLTE/dist/css/skins/skin-red.css',
+    ], 'public/css/dashboard.css', 'bower_components/');
+
+    mix.scripts([
+        'jquery/dist/jquery.js',
+        'AdminLTE/plugins/iCheck/icheck.min.js',
+        'AdminLTE/plugins/fastclick/fastclick.js',
+        'AdminLTE/dist/js/app.min.js',
+        'pnotify/dist/pnotify.js',
+        'nprogress/nprogress.js',
+        'vue/dist/vue.js',
+        'vue-resource/dist/vue-resource.js',
+        'bootstrap/dist/js/bootstrap.js'
+    ], 'public/js/dashboard.js', 'bower_components/');
+
     // Admin Login Assets
     mix.styles([
         'bootstrap/dist/css/bootstrap.css',
@@ -37,6 +60,7 @@ elixir(mix => {
     mix.copy([
         'bower_components/fontawesome/fonts',
         'bower_components/bootstrap/fonts',
+        'bower_components/Ionicons/fonts'
     ], 'public/fonts');
 
     mix.copy([
