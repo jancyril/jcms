@@ -9,4 +9,4 @@
 Homestead.json
 Homestead.yaml
 .env
-/bower_components
+/resources/assets/bower_components

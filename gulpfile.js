@@ -16,63 +16,65 @@ require('laravel-elixir-vue-2');
 elixir(mix => {
     // Admin Dashboard Assets
     mix.styles([
-        'bootstrap/dist/css/bootstrap.css',
-        'fontawesome/css/font-awesome.css',
-        'pnotify/dist/pnotify.css',
-        'nprogress/nprogress.css',
-        'Ionicons/css/ionicons.css',
-        'AdminLTE/dist/css/AdminLTE.css',
-        'AdminLTE/dist/css/skins/skin-red.css',
-    ], 'public/css/dashboard.css', 'bower_components/');
+        'bower_components/bootstrap/dist/css/bootstrap.css',
+        'bower_components/fontawesome/css/font-awesome.css',
+        'bower_components/pnotify/dist/pnotify.css',
+        'bower_components/datatables.net-bs/css/dataTables.bootstrap.css',
+        'bower_components/metisMenu/dist/metisMenu.css',
+        'bower_components/animate.css/animate.css',
+        'bower_components/nprogress/nprogress.css',
+        'bower_components/sweetalert/dist/sweetalert.css',
+        'css/sb-admin-2.css'
+    ], 'public/css/dashboard.css', 'resources/assets/');
 
     mix.scripts([
-        'jquery/dist/jquery.js',
-        'AdminLTE/plugins/iCheck/icheck.min.js',
-        'AdminLTE/plugins/fastclick/fastclick.js',
-        'AdminLTE/dist/js/app.min.js',
-        'pnotify/dist/pnotify.js',
-        'nprogress/nprogress.js',
-        'vue/dist/vue.js',
-        'vue-resource/dist/vue-resource.js',
-        'bootstrap/dist/js/bootstrap.js'
-    ], 'public/js/dashboard.js', 'bower_components/');
+        'bower_components/jquery/dist/jquery.js',
+        'bower_components/pnotify/dist/pnotify.js',
+        'bower_components/pnotify/dist/pnotify.animate.js',
+        'bower_components/nprogress/nprogress.js',
+        'bower_components/vue/dist/vue.js',
+        'bower_components/vue-resource/dist/vue-resource.js',
+        'bower_components/bootstrap/dist/js/bootstrap.js',
+        'bower_components/datatables.net/js/jquery.dataTables.js',
+        'bower_components/datatables.net-bs/js/dataTables.bootstrap.js',
+        'bower_components/sweetalert/dist/sweetalert.min.js',
+        'bower_components/metisMenu/dist/metisMenu.js',
+        'js/sb-admin-2.js'
+    ], 'public/js/dashboard.js', 'resources/assets/');
 
     // Admin Login Assets
     mix.styles([
-        'bootstrap/dist/css/bootstrap.css',
-        'fontawesome/css/font-awesome.css',
-        'AdminLTE/dist/css/AdminLTE.css',
-        'AdminLTE/plugins/iCheck/square/blue.css',
-        'pnotify/dist/pnotify.css',
-        'nprogress/nprogress.css'
-    ], 'public/css/login.css', 'bower_components/');
+        'bower_components/bootstrap/dist/css/bootstrap.css',
+        'bower_components/fontawesome/css/font-awesome.css',
+        'bower_components/pnotify/dist/pnotify.css',
+        'bower_components/nprogress/nprogress.css',
+        'bower_components/animate.css/animate.css',
+        'css/sb-admin-2.css'
+    ], 'public/css/login.css', 'resources/assets/');
 
     mix.scripts([
-        'jquery/dist/jquery.js',
-        'AdminLTE/plugins/iCheck/icheck.min.js',
-        'pnotify/dist/pnotify.js',
-        'nprogress/nprogress.js',
-        'vue/dist/vue.js',
-        'vue-resource/dist/vue-resource.js'
-    ], 'public/js/login.js', 'bower_components/');
+        'bower_components/jquery/dist/jquery.js',
+        'bower_components/pnotify/dist/pnotify.js',
+        'bower_components/pnotify/dist/pnotify.animate.js',
+        'bower_components/nprogress/nprogress.js',
+        'bower_components/vue/dist/vue.js',
+        'bower_components/vue-resource/dist/vue-resource.js'
+    ], 'public/js/login.js', 'resources/assets/');
 
     // Copy fonts
     mix.copy([
-        'bower_components/fontawesome/fonts',
-        'bower_components/bootstrap/fonts',
-        'bower_components/Ionicons/fonts'
+        'resources/assets/bower_components/fontawesome/fonts',
+        'resources/assets/bower_components/bootstrap/fonts',
+        'resources/assets/bower_components/Ionicons/fonts'
     ], 'public/fonts');
-
-    mix.copy([
-        'bower_components/AdminLTE/plugins/iCheck/square/blue.png',
-        'bower_components/AdminLTE/plugins/iCheck/square/blue@2x.png',
-    ], 'public/css');
 
     /**
      * Add versioning for all asset files
      */
     mix.version([
         'public/css/login.css',
-        'public/js/login.js'
+        'public/js/login.js',
+        'public/css/dashboard.css',
+        'public/js/dashboard.js'
     ]);
 });
