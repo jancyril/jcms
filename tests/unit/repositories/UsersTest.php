@@ -13,7 +13,7 @@ class UsersTest extends TestCase
         $data = factory(Janitor\Models\User::class)->make()->toArray();
 
         $user = new Users();
-        $user->add(array_merge($data, ['password' => str_random(20)]));
+        $user->create(array_merge($data, ['password' => str_random(20)]));
 
         $this->seeInDatabase('users', $data);
     }

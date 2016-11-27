@@ -86,7 +86,7 @@ abstract class BaseRepository
      *
      * @return bool|collection
      */
-    public function add(array $data)
+    public function create(array $data)
     {
         try {
             $entity = $this->model->create($data);
