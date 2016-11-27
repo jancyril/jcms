@@ -21,3 +21,11 @@ $factory->define(Janitor\Models\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(Janitor\Models\PostCategory::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->sentence,
+        'slug' => $faker->sentence,
+        'description' => $faker->paragraph
+    ];
+});
