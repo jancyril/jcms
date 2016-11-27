@@ -1,68 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Jan Cyril Segubience">
+
   <title>{{ $pageTitle }}</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Login Assets -->
-  <link rel="stylesheet" href="{{ asset('css/login.css') }}">
   
+  <link href="{{ asset('css/login.css') }}" rel="stylesheet">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition login-page">
-<div id="app" class="login-box">
-  <div class="login-logo">
-    <strong>Administrator Login</strong>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-    <p class="login-box-msg"></p>
 
-    <form method="post" v-on:submit.prevent="login">
-      <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email" v-model="form.email" />
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password" v-model="form.password" />
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="row">
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> Remember Me
-            </label>
-          </div>
+<body>
+
+<div id="jcms" class="container">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="login-panel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Please Sign In</h3>
         </div>
-        <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat" :disabled="submitting">
-            <i class="fa fa-spinner fa-pulse" v-show="submitting"></i> Sign In
-          </button>
+        <div class="panel-body">
+          <form role="form" v-on:submit.prevent="login">
+            <fieldset>
+              <div class="form-group">
+                <input class="form-control" placeholder="Please enter your email" name="email" type="email" autofocus v-model="form.email">
+              </div>
+              <div class="form-group">
+                <input class="form-control" placeholder="Please enter your password" name="password" type="password" v-model="form.password">
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                </label>
+              </div>
+              <!-- Change this to a button or input when using this as a form -->
+              <button class="btn btn-success btn-block" :disabled="submitting">
+                <i class="fa fa-pulse fa-spinner" v-show="submitting"></i> Login
+              </button>
+            </fieldset>
+          </form>
         </div>
-        <!-- /.col -->
       </div>
-    </form>
+    </div>
   </div>
-  <!-- /.login-box-body -->
 </div>
-<!-- /.login-box -->
-
-<!-- Login JS -->
 <script src="{{ asset('js/login.js') }}"></script>
 <script>
 Vue.http.headers.common['X-CSRF-TOKEN'] = "{{ csrf_token() }}";
 
 new Vue({
-  el: '#app',
+  el: '#jcms',
 
   data: {
     form: {
@@ -80,6 +75,9 @@ new Vue({
 
       this.$http.post("{{ route('admin::post-login') }}", JSON.stringify(this.form)).then((response) => {
         notify(response.data);
+        if (response.data.result) {
+          window.location.href = "{{ route('admin::dashboard') }}";
+        }
         this.submitting = false;
       }, (error) => {
         this.submitting = false;
@@ -89,12 +87,6 @@ new Vue({
       NProgress.done();
     }
   }
-});
-
-$('input').iCheck({
-  checkboxClass: 'icheckbox_square-blue',
-  radioClass: 'iradio_square-blue',
-  increaseArea: '20%'
 });
 </script>
 @include('admin.js')
