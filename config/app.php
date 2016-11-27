@@ -177,6 +177,7 @@ return [
         // Janitor\Providers\BroadcastServiceProvider::class,
         Janitor\Providers\EventServiceProvider::class,
         Janitor\Providers\RouteServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
