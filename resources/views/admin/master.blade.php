@@ -11,7 +11,7 @@
 
   <title>{{ $pageTitle }}</title>
   
-  <link href="{{ elixir('css/dashboard.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -35,7 +35,7 @@
       </div>
     </div>
   </div>
-<script src="{{ elixir('js/dashboard.js') }}"></script>
+<script src="{{ asset('js/dashboard.js') }}"></script>
 @include('admin.js')
 @yield('customjs')
 </body>
