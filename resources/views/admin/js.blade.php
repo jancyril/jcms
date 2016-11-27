@@ -4,8 +4,13 @@ function notify(response) {
     styling: 'fontawesome',
     type: response.type,
     title: response.title,
-    text: response.message
-});
+    text: response.message,
+    animate: {
+      animate: true,
+      in_class: 'lightSpeedIn',
+      out_class: 'fadeOut'
+    }
+  });
 }
 
 function showError(errorValue) {
@@ -13,7 +18,12 @@ function showError(errorValue) {
     styling: 'fontawesome',
     type: 'error',
     title: 'Error',
-    text: errorValue.join("<br/>")
+    text: errorValue.join("<br/>"),
+    animate: {
+      animate: true,
+      in_class: 'lightSpeedIn',
+      out_class: 'fadeOut'
+    }
   });
 }
 
@@ -21,20 +31,15 @@ function vueError(error) {
   var messages = [];
 
   var errors = Object.keys(error.data).map(function (key) {
-      return error.data[key];
+    return error.data[key][0];
   });
 
-  for (var x = 0; x < errors.length; x++) {
-    if (Array.isArray(errors[x])) {
-      for (var y = 0; y < errors[x].length; y++) {
-        messages.push(errors[x][y]);
-      }
-      continue;
+  setTimeout(function () {
+    for (var x = 0; x < errors.length; x++) {
+      messages.push(errors[x]);
     }
 
-    messages.push(errors[x]);
-  }
-
-  showError(messages);
+    showError(messages);
+  }, 100);
 }
 </script>
