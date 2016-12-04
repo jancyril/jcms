@@ -22,6 +22,18 @@ $factory->define(Janitor\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(Janitor\Models\Post::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->sentence,
+        'slug' => $faker->sentence,
+        'excerpt' => $faker->sentence,
+        'content' => $faker->paragraph,
+        'image' => str_random(10).'.jpg',
+        'user_id' => factory(Janitor\Models\User::class)->create()->id,
+        'category_id' => factory(Janitor\Models\PostCategory::class)->create()->id
+    ];
+});
+
 $factory->define(Janitor\Models\PostCategory::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->sentence,

@@ -24,6 +24,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin::', 'm
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
+    // Routes for posts
+    Route::get('posts', 'PostsController@index')->name('posts');
+    Route::get('posts/get', 'PostsController@get')->name('get-posts');
+    Route::get('posts/new', 'PostsController@create')->name('new-post');
+    Route::post('posts/new', 'PostsController@store')->name('post-post');
+
     // Routes for post categories
     Route::get('post-categories', 'PostCategoriesController@index')->name('post-categories');
     Route::get('post-categories/get', 'PostCategoriesController@get')->name('get-post-categories');
