@@ -24,5 +24,7 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="DB_CONNECTION" value="testing"/>
+        <env name="ASSET_PATH" value="storage/app/public/"/>
+        <env name="APP_FILESYSTEM" value="local"/>
     </php>
 </phpunit>

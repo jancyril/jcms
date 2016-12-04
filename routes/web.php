@@ -24,9 +24,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin::', 'm
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
+    // Routes for post categories
     Route::get('post-categories', 'PostCategoriesController@index')->name('post-categories');
     Route::get('post-categories/get', 'PostCategoriesController@get')->name('get-post-categories');
     Route::post('post-categories/new', 'PostCategoriesController@store')->name('post-post-category');
     Route::put('post-categories/{id}/edit', 'PostCategoriesController@update')->name('put-post-category');
     Route::delete('post-categories/delete/{id}', 'PostCategoriesController@destroy')->name('delete-post-category');
+
+    // Routes for files
+    Route::post('files/new', 'FilesController@store')->name('post-file');
+    Route::delete('files/delete/{file}', 'FilesController@delete')->name('delete-file');
 });

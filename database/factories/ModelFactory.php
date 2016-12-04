@@ -29,3 +29,12 @@ $factory->define(Janitor\Models\PostCategory::class, function (Faker\Generator $
         'description' => $faker->paragraph
     ];
 });
+
+$factory->define(Janitor\Models\File::class, function (Faker\Generator $faker) {
+    $name = $faker->word;
+
+    return [
+        'name' => $name . '.jpg',
+        'filename' => uniqid($name) . '.jpg',
+    ];
+});
