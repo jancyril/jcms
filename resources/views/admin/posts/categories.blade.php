@@ -221,11 +221,10 @@
   });
 
   $('#post-categories').on('click', '.delete', function() {
-    // vm._data.id = $(this).data('id');
     var id = $(this).data('id');
 
     swal({
-      title: 'Delete this group?',
+      title: 'Delete this category?',
       text: 'All data on this record will be removed and you cannot undo this operation.',
       type: 'warning',
       showCancelButton: true,
