@@ -1,16 +1,19 @@
 <?php
 
+namespace Test\Feature\Admin;
+
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AdminLoginControllerTest extends TestCase
+class LoginControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test **/
     public function it_can_go_to_the_admin_login_page()
     {
-        $this->visit(route('admin::login'))
-            ->see('Administrator Login');
+        $this->get(route('admin::login'))
+            ->assertSee('Administrator Login');
     }
 
     /** @test **/
@@ -22,6 +25,7 @@ class AdminLoginControllerTest extends TestCase
         $this->post(route('admin::post-login'), $data)
             ->assertSessionHasErrors();
     }
+
     /** @test **/
     public function admin_login_will_fail_if_email_is_not_a_valid_email()
     {
@@ -47,45 +51,45 @@ class AdminLoginControllerTest extends TestCase
         $data = ['email' => 'me@jancyril.com', 'password' => str_random(10)];
 
         $this->post(route('admin::post-login'), $data)
-            ->see('Error');
+            ->assertSee('Error');
     }
 
     /** @test **/
     public function admin_login_will_succeed_if_credentials_are_valid()
     {
         $password = str_random(10);
-        $user = factory(Janitor\Models\User::class)->create(['password' => $password]);
+        $user = factory(\Janitor\Models\User::class)->create(['password' => $password]);
 
         $this->post(route('admin::post-login'), ['email' => $user->email, 'password' => $password])
-            ->see('Success');
+            ->assertSee('Success');
     }
 
     /** @test **/
     public function admin_login_will_lockout_after_five_invalid_attempts()
     {
         $password = str_random(10);
-        $user = factory(Janitor\Models\User::class)->create(['password' => $password]);
+        $user = factory(\Janitor\Models\User::class)->create(['password' => $password]);
 
-        for ($x=0; $x<5; $x++) {
+        for ($x = 0; $x < 5; ++$x) {
             $this->post(route('admin::post-login'), ['email' => $user->email, 'password' => str_random(10)])
-                ->see('Error');
+                ->assertSee('Error');
         }
 
         $this->post(route('admin::post-login'), ['email' => $user->email, 'password' => $password])
-            ->see('Error')
-            ->see('seconds');
+            ->assertSee('Error')
+            ->assertSee('seconds');
     }
 
     /** @test **/
     public function admin_login_can_remember_a_user()
     {
         $password = str_random(10);
-        $user = factory(Janitor\Models\User::class)->create(['password' => $password]);
+        $user = factory(\Janitor\Models\User::class)->create(['password' => $password]);
 
         $this->post(route('admin::post-login'), ['email' => $user->email, 'password' => $password])
-            ->see('Success');
+            ->assertSee('Success');
 
-        $this->visit(route('admin::login'))
-            ->seePageIs(route('admin::dashboard'));
+        $this->get(route('admin::login'))
+            ->assertRedirect(route('admin::dashboard'));
     }
 }

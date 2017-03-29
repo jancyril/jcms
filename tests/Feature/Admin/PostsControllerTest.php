@@ -1,8 +1,11 @@
 <?php
 
+namespace Test\Feature\Admin;
+
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AdminPostsControllerTest extends TestCase
+class PostsControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -11,9 +14,8 @@ class AdminPostsControllerTest extends TestCase
     {
         $this->admin();
 
-        $this->visit(route('admin::posts'))
-            ->seePageIs(route('admin::posts'))
-            ->assertResponseOk();
+        $this->get(route('admin::posts'))
+            ->assertStatus(200);
     }
 
     /** @test **/
@@ -21,9 +23,8 @@ class AdminPostsControllerTest extends TestCase
     {
         $this->admin();
 
-        $this->visit(route('admin::new-post'))
-            ->seePageIs(route('admin::new-post'))
-            ->assertResponseOk();
+        $this->get(route('admin::new-post'))
+            ->assertStatus(200);
     }
 
     /** @test **/
@@ -78,18 +79,18 @@ class AdminPostsControllerTest extends TestCase
         $data = $this->make();
 
         $this->post(route('admin::post-post'), $data)
-            ->see('Success')
-            ->assertResponseOk();
+            ->assertSee('Success')
+            ->assertStatus(200);
     }
 
     private function make(array $overrides = [])
     {
-        return factory(Janitor\Models\Post::class)->make($overrides)->toArray();
+        return factory(\Janitor\Models\Post::class)->make($overrides)->toArray();
     }
 
     private function admin()
     {
-        $user = factory(Janitor\Models\User::class)->create();
+        $user = factory(\Janitor\Models\User::class)->create();
 
         $this->actingAs($user);
     }

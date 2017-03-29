@@ -71,6 +71,10 @@ trait Slugify
     {
         $pieces = explode('-', $found);
 
+        if (!is_numeric(end($pieces))) {
+            return $suggested.'-1';
+        }
+
         return $suggested.'-'.(end($pieces) + 1);
     }
 

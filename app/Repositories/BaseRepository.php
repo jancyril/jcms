@@ -5,7 +5,7 @@
  *
  * PHP 7
  *
- * @author Jan Cyril Segubience <jancyrilsegubience@gmail.com>
+ * @author Jan Cyril Segubience <jancyril@segubience.com>
  */
 
 namespace Janitor\Repositories;
@@ -78,6 +78,11 @@ abstract class BaseRepository
     {
         $this->model = app()->make($this->model());
     }
+
+    /**
+     * Abstract method to force creation of this method to all extending class.
+     */
+    abstract protected function model();
 
     /**
      * This method will create a new record on the model.
@@ -154,7 +159,7 @@ abstract class BaseRepository
             ->orderBy($this->order, $this->sort)
             ->with($this->relationships)
             ->get();
-                                
+
         if ($entities->isEmpty()) {
             return false;
         }

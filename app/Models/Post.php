@@ -16,9 +16,9 @@ class Post extends Model
 
     public function setSlugAttribute($slug)
     {
-        $id = $this->attributes['id'] ?? null;
+        $id = $this->attributes['id'] ?? '';
 
-        if ($id) {
+        if ($id != '') {
             $slug = $this->slugToUse($id);
         }
 

@@ -1,8 +1,11 @@
 <?php
 
+namespace Test\Feature\Admin;
+
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AdminDashboardControllerTest extends TestCase
+class DashboardControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -11,15 +14,14 @@ class AdminDashboardControllerTest extends TestCase
     {
         $this->admin();
 
-        $this->visit(route('admin::dashboard'))
-            ->see('Dashboard')
-            ->seePageIs(route('admin::dashboard'))
-            ->assertResponseOk();
+        $this->get(route('admin::dashboard'))
+            ->assertSee('Dashboard')
+            ->assertStatus(200);
     }
 
     private function admin()
     {
-        $user = factory(Janitor\Models\User::class)->create();
+        $user = factory(\Janitor\Models\User::class)->create();
 
         $this->actingAs($user);
     }

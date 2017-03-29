@@ -1,9 +1,13 @@
 <?php
 
+namespace Test\Feature\Admin;
+
+use Tests\TestCase;
 use VirtualFileSystem\FileSystem as Vfs;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AdminFilesControllerTest extends TestCase
+class FilesControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -13,8 +17,8 @@ class AdminFilesControllerTest extends TestCase
         $this->admin();
 
         $this->post(route('admin::post-file'), ['files' => [$this->file('sample.mov')]])
-            ->see('Error')
-            ->assertResponseOk();
+            ->assertSee('error')
+            ->assertStatus(200);
     }
 
     /** @test  **/
@@ -23,8 +27,8 @@ class AdminFilesControllerTest extends TestCase
         $this->admin();
 
         $this->post(route('admin::post-file'), ['files' => [$this->file('sample.jpg', 1024 * 1024 * 100)]])
-            ->see('Error')
-            ->assertResponseOk();
+            ->assertSee('error')
+            ->assertStatus(200);
     }
 
     /** @test  **/
@@ -34,14 +38,14 @@ class AdminFilesControllerTest extends TestCase
 
         file_put_contents($vfs->path('/sample.jpg'), '');
 
-        $file = new Symfony\Component\HttpFoundation\File\UploadedFile($vfs->path('/sample.jpg'), 'sample.jpg');
+        $file = new UploadedFile($vfs->path('/sample.jpg'), 'sample.jpg');
 
         $admin = $this->admin();
 
         $this->post(route('admin::post-file'), ['files' => [$file]])
-            ->see('sample.jpg')
-            ->see('Success')
-            ->assertResponseOk();
+            ->assertSee('sample.jpg')
+            ->assertSee('Success')
+            ->assertStatus(200);
     }
 
     /** @test  **/
@@ -53,17 +57,17 @@ class AdminFilesControllerTest extends TestCase
 
         file_put_contents($vfs->path('/photo.csv'), 'Hello World');
 
-        $files[] = new Symfony\Component\HttpFoundation\File\UploadedFile($vfs->path('/sample.csv'), 'sample.csv');
+        $files[] = new UploadedFile($vfs->path('/sample.csv'), 'sample.csv');
 
-        $files[] = new Symfony\Component\HttpFoundation\File\UploadedFile($vfs->path('/photo.csv'), 'photo.csv');
+        $files[] = new UploadedFile($vfs->path('/photo.csv'), 'photo.csv');
 
         $this->admin();
 
         $this->post(route('admin::post-file'), ['files' => $files])
-            ->see('sample.csv')
-            ->see('photo.csv')
-            ->see('Success')
-            ->assertResponseOk();
+            ->assertSee('sample.csv')
+            ->assertSee('photo.csv')
+            ->assertSee('Success')
+            ->assertStatus(200);
     }
 
     /** @test  **/
@@ -77,20 +81,20 @@ class AdminFilesControllerTest extends TestCase
 
         file_put_contents($vfs->path('/photo.csv'), 'Hey');
 
-        $files[] = new Symfony\Component\HttpFoundation\File\UploadedFile($vfs->path('/sample.csv'), 'sample.csv');
+        $files[] = new UploadedFile($vfs->path('/sample.csv'), 'sample.csv');
 
-        $files[] = new Symfony\Component\HttpFoundation\File\UploadedFile($vfs->path('/sample.php'), 'sample.php');
+        $files[] = new UploadedFile($vfs->path('/sample.php'), 'sample.php');
 
-        $files[] = new Symfony\Component\HttpFoundation\File\UploadedFile($vfs->path('/photo.csv'), 'photo.csv');
+        $files[] = new UploadedFile($vfs->path('/photo.csv'), 'photo.csv');
 
         $admin = $this->admin();
 
         $this->post(route('admin::post-file'), ['files' => $files])
-            ->see('sample.csv')
-            ->see('photo.csv')
-            ->dontSee('sample.php')
-            ->see('Success')
-            ->assertResponseOk();
+            ->assertSee('sample.csv')
+            ->assertSee('photo.csv')
+            ->assertDontSee('sample.php')
+            ->assertSee('Success')
+            ->assertStatus(200);
     }
 
     /** @test  **/
@@ -104,20 +108,20 @@ class AdminFilesControllerTest extends TestCase
 
         file_put_contents($vfs->path('/photo.csv'), 'Hey');
 
-        $files[] = new Symfony\Component\HttpFoundation\File\UploadedFile($vfs->path('/sample.csv'), 'sample.csv');
+        $files[] = new UploadedFile($vfs->path('/sample.csv'), 'sample.csv');
 
-        $files[] = new Symfony\Component\HttpFoundation\File\UploadedFile($vfs->path('/sample.php'), 'sample.php');
+        $files[] = new UploadedFile($vfs->path('/sample.php'), 'sample.php');
 
-        $files[] = new Symfony\Component\HttpFoundation\File\UploadedFile($vfs->path('/photo.csv'), 'photo.csv');
+        $files[] = new UploadedFile($vfs->path('/photo.csv'), 'photo.csv');
 
         $admin = $this->admin();
 
-        $this->post(route('admin::post-file'), ['files' => $files])
-            ->see('sample.csv')
-            ->see('photo.csv')
-            ->dontSee('sample.php')
-            ->see('Success')
-            ->assertResponseOk();
+        $response = $this->post(route('admin::post-file'), ['files' => $files])
+                        ->assertSee('sample.csv')
+                        ->assertSee('photo.csv')
+                        ->assertDontSee('sample.php')
+                        ->assertSee('Success')
+                        ->assertStatus(200);
     }
 
     /** @test  **/
@@ -127,17 +131,17 @@ class AdminFilesControllerTest extends TestCase
 
         file_put_contents($vfs->path('/data.csv'), 'Hey there');
 
-        $file = new Symfony\Component\HttpFoundation\File\UploadedFile($vfs->path('/data.csv'), 'data.csv');
+        $file = new UploadedFile($vfs->path('/data.csv'), 'data.csv');
 
         $this->admin();
 
         $result = $this->post(route('admin::post-file'), ['files' => [$file]]);
 
-        $id = $result->response->original[1]['id'];
+        $id = $result->original[1]['id'];
 
         $this->delete(route('admin::delete-file', ['id' => $id]))
-            ->see('Success')
-            ->assertResponseOk();
+            ->assertSee('Success')
+            ->assertStatus(200);
     }
 
     /** @test  **/
@@ -147,15 +151,15 @@ class AdminFilesControllerTest extends TestCase
 
         file_put_contents($vfs->path('/data.csv'), 'Hey there');
 
-        $file = new Symfony\Component\HttpFoundation\File\UploadedFile($vfs->path('/data.csv'), 'data.csv');
+        $file = new UploadedFile($vfs->path('/data.csv'), 'data.csv');
 
         $this->admin();
 
         $result = $this->post(route('admin::post-file'), ['files' => [$file]]);
 
-        $this->delete(route('admin::delete-file', ['file' => $result->response->original[1]['filename']]))
-            ->see('Success')
-            ->assertResponseOk();
+        $this->delete(route('admin::delete-file', ['file' => $result->original[1]['filename']]))
+            ->assertSee('Success')
+            ->assertStatus(200);
     }
 
     public function tearDown()
@@ -165,7 +169,7 @@ class AdminFilesControllerTest extends TestCase
 
     private function admin()
     {
-        $user = factory(Janitor\Models\User::class)->create();
+        $user = factory(\Janitor\Models\User::class)->create();
 
         $this->actingAs($user);
 
@@ -178,7 +182,7 @@ class AdminFilesControllerTest extends TestCase
 
         file_put_contents($vfs->path('/'.$filename), '');
 
-        $file = new Symfony\Component\HttpFoundation\File\UploadedFile($vfs->path('/'.$filename), $filename, $mime, $size);
+        $file = new UploadedFile($vfs->path('/'.$filename), $filename, $mime, $size);
 
         return $file;
     }

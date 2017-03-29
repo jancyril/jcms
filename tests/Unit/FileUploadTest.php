@@ -1,5 +1,8 @@
 <?php
 
+namespace Test\Unit;
+
+use Tests\TestCase;
 use Janitor\Helpers\FileUpload as File;
 use VirtualFileSystem\FileSystem as Vfs;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -151,14 +154,14 @@ class FileUploadTest extends TestCase
 
         $result = $file->getCreationDate($tempFile);
 
-        $created = Carbon\Carbon::createFromTimestamp(filemtime($tempFile))->format('Y-m-d H:i:s');
+        $created = \Carbon\Carbon::createFromTimestamp(filemtime($tempFile))->format('Y-m-d H:i:s');
 
         $this->assertEquals($created, $result);
     }
 
     private function mockFile($name = 'image.jpg', $ext = 'jpg', $size = '1024', $mime = 'image/jpeg')
     {
-        return Mockery::mock(
+        return \Mockery::mock(
             Symfony\Component\HttpFoundation\File\UploadedFile::class,
             [
                 'getClientOriginalName' => $name,

@@ -1,8 +1,11 @@
 <?php
 
+namespace Test\Feature\Admin;
+
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AdminPostCategoriesControllerTest extends TestCase
+class PostCategoriesControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -11,9 +14,9 @@ class AdminPostCategoriesControllerTest extends TestCase
     {
         $this->admin();
 
-        $this->visit(route('admin::post-categories'))
-            ->seePageIs(route('admin::post-categories'))
-            ->see('Post Categories');
+        $this->get(route('admin::post-categories'))
+            ->assertSee('Post Categories')
+            ->assertStatus(200);
     }
 
     /** @test **/
@@ -42,8 +45,8 @@ class AdminPostCategoriesControllerTest extends TestCase
         $this->admin();
 
         $this->post(route('admin::post-post-category'), $this->make()->toArray())
-            ->see('Success')
-            ->assertResponseOk();
+            ->assertSee('Success')
+            ->assertStatus(200);
     }
 
     /** @test **/
@@ -78,8 +81,8 @@ class AdminPostCategoriesControllerTest extends TestCase
         $this->admin();
 
         $this->put(route('admin::put-post-category', ['id' => $category->id]), $category->toArray())
-            ->see('Success')
-            ->assertResponseOk();
+            ->assertSee('Success')
+            ->assertStatus(200);
     }
 
     /** @test **/
@@ -90,23 +93,23 @@ class AdminPostCategoriesControllerTest extends TestCase
         $this->admin();
 
         $this->delete(route('admin::delete-post-category', ['id' => $category->id]))
-            ->see('Success')
-            ->assertResponseOk();
+            ->assertSee('Success')
+            ->assertStatus(200);
     }
 
     private function make(array $overrides = [])
     {
-        return factory(Janitor\Models\PostCategory::class)->make($overrides);
+        return factory(\Janitor\Models\PostCategory::class)->make($overrides);
     }
 
     private function create(array $overrides = [])
     {
-        return factory(Janitor\Models\PostCategory::class)->create($overrides);
+        return factory(\Janitor\Models\PostCategory::class)->create($overrides);
     }
 
     private function admin()
     {
-        $user = factory(Janitor\Models\User::class)->create();
+        $user = factory(\Janitor\Models\User::class)->create();
 
         $this->actingAs($user);
     }

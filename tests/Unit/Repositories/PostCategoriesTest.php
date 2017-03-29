@@ -1,5 +1,8 @@
 <?php
 
+namespace Test\Unit\Repositories;
+
+use Tests\TestCase;
 use Janitor\Repositories\PostCategories;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -12,10 +15,10 @@ class PostCategoriesTest extends TestCase
     {
         $data = $this->data()->toArray();
 
-        $category = new PostCategories;
+        $category = new PostCategories();
         $category->create($data);
 
-        $this->seeInDatabase('post_categories', $data);
+        $this->assertDatabaseHas('post_categories', $data);
     }
 
     /** @test **/
@@ -23,12 +26,12 @@ class PostCategoriesTest extends TestCase
     {
         $data = $this->data()->toArray();
 
-        $category = new PostCategories;
+        $category = new PostCategories();
         $category->create($data);
 
         $category->update($category->id, ['name' => 'Sample Category']);
 
-        $this->seeInDatabase('post_categories', array_merge($data, ['name' => 'Sample Category']));
+        $this->assertDatabaseHas('post_categories', array_merge($data, ['name' => 'Sample Category']));
     }
 
     /** @test **/
@@ -36,16 +39,16 @@ class PostCategoriesTest extends TestCase
     {
         $data = $this->data()->toArray();
 
-        $category = new PostCategories;
+        $category = new PostCategories();
         $category->create($data);
 
         $category->delete($category->id);
 
-        $this->notSeeInDatabase('post_categories', $data);
+        $this->assertDatabaseMissing('post_categories', $data);
     }
 
     private function data(array $overrides = [])
     {
-        return factory(Janitor\Models\PostCategory::class)->make($overrides);
+        return factory(\Janitor\Models\PostCategory::class)->make($overrides);
     }
 }

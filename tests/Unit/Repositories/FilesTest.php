@@ -1,5 +1,8 @@
 <?php
 
+namespace Test\Unit\Repositories;
+
+use Tests\TestCase;
 use Janitor\Repositories\Files;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -16,7 +19,7 @@ class FilesTest extends TestCase
 
         $file->create($data);
 
-        $this->seeInDatabase('files', ['id' => $file->id]);
+        $this->assertDatabaseHas('files', ['id' => $file->id]);
     }
 
     /** @test  **/
@@ -28,7 +31,7 @@ class FilesTest extends TestCase
 
         $file->update($record->id, ['name' => 'Image']);
 
-        $this->seeInDatabase('files', ['id' => $record->id, 'name' => 'Image']);
+        $this->assertDatabaseHas('files', ['id' => $record->id, 'name' => 'Image']);
     }
 
     /** @test  **/
@@ -40,16 +43,16 @@ class FilesTest extends TestCase
 
         $file->delete($record->id);
 
-        $this->notSeeInDatabase('files', ['id' => $record->id]);
+        $this->assertDatabaseMissing('files', ['id' => $record->id]);
     }
 
     private function make()
     {
-        return factory(Janitor\Models\File::class)->make()->toArray();
+        return factory(\Janitor\Models\File::class)->make()->toArray();
     }
 
     private function create(array $overrides = [])
     {
-        return factory(Janitor\Models\File::class)->create($overrides);
+        return factory(\Janitor\Models\File::class)->create($overrides);
     }
 }
