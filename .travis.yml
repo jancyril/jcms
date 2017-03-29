@@ -1,6 +1,6 @@
 language: php
 
-php: 
+php:
   - '7.0'
 
 addons:
@@ -13,4 +13,4 @@ script:
   - composer install
   - mv env.testing .env
   - php artisan migrate
-  - phpunit
+  - vendor/bin/phpunit
