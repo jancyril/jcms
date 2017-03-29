@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'guest'], function () {
     Route::get('login', 'LoginController@index')->name('login');
     Route::post('login', 'LoginController@login')->name('post-login');

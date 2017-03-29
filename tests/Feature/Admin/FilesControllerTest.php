@@ -4,8 +4,8 @@ namespace Test\Feature\Admin;
 
 use Tests\TestCase;
 use VirtualFileSystem\FileSystem as Vfs;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FilesControllerTest extends TestCase
 {

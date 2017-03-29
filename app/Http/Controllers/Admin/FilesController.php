@@ -3,8 +3,8 @@
 namespace Janitor\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Janitor\Repositories\Files;
 use Janitor\Helpers\FileUpload;
+use Janitor\Repositories\Files;
 use Janitor\Http\Controllers\Controller;
 
 class FilesController extends Controller

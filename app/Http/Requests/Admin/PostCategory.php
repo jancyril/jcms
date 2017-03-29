@@ -17,7 +17,7 @@ class PostCategory extends Request
     }
 
     /**
-     * Validation rules for post method
+     * Validation rules for post method.
      *
      * @return array
      */
@@ -26,13 +26,13 @@ class PostCategory extends Request
         return [
             'name' => [
                 'required',
-                'unique:post_categories,name'
-            ]
+                'unique:post_categories,name',
+            ],
         ];
     }
 
     /**
-     * Validation rules for put method
+     * Validation rules for put method.
      *
      * @return array
      */
@@ -41,8 +41,8 @@ class PostCategory extends Request
         return [
             'name' => [
                 'required',
-                'unique:post_categories,name,'.intval($this->segment(3))
-            ]
+                'unique:post_categories,name,'.intval($this->segment(3)),
+            ],
         ];
     }
 }

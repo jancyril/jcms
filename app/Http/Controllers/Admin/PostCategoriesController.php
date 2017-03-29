@@ -3,8 +3,8 @@
 namespace Janitor\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Janitor\Repositories\PostCategories;
 use Janitor\Http\Controllers\Controller;
+use Janitor\Repositories\PostCategories;
 use Janitor\Http\Requests\Admin\PostCategory;
 
 class PostCategoriesController extends Controller

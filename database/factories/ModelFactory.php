@@ -30,7 +30,7 @@ $factory->define(Janitor\Models\Post::class, function (Faker\Generator $faker) {
         'content' => $faker->paragraph,
         'image' => str_random(10).'.jpg',
         'user_id' => factory(Janitor\Models\User::class)->create()->id,
-        'category_id' => factory(Janitor\Models\PostCategory::class)->create()->id
+        'category_id' => factory(Janitor\Models\PostCategory::class)->create()->id,
     ];
 });
 
@@ -38,7 +38,7 @@ $factory->define(Janitor\Models\PostCategory::class, function (Faker\Generator $
     return [
         'name' => $faker->sentence,
         'slug' => $faker->sentence,
-        'description' => $faker->paragraph
+        'description' => $faker->paragraph,
     ];
 });
 
@@ -46,7 +46,7 @@ $factory->define(Janitor\Models\File::class, function (Faker\Generator $faker) {
     $name = $faker->word;
 
     return [
-        'name' => $name . '.jpg',
-        'filename' => uniqid($name) . '.jpg',
+        'name' => $name.'.jpg',
+        'filename' => uniqid($name).'.jpg',
     ];
 });
