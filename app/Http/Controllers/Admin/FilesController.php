@@ -70,7 +70,7 @@ class FilesController extends Controller
      *
      * @return array
      */
-    public function store(Request $request): array
+    public function store(Request $request)
     {
         if (empty($request->input('files'))) {
             return $this->error('No file has been selected');
@@ -97,7 +97,7 @@ class FilesController extends Controller
      *
      * @return array
      */
-    public function delete(Request $request, $file): array
+    public function delete(Request $request, $file)
     {
         if (!$file) {
             return $this->notifyInfo('No file has been deleted.', ['title' => 'Nothing happened']);
@@ -114,6 +114,7 @@ class FilesController extends Controller
         }
 
         $this->upload->remove($entity->first()->filename);
+
         $this->file->delete($entity->first()->id);
 
         return $this->success('The file has been successfully deleted.');
@@ -194,6 +195,7 @@ class FilesController extends Controller
         }
 
         $missing = $original - $count;
+
         $word = str_plural('file', $missing);
 
         $this->notice['message'][] = [
@@ -214,8 +216,8 @@ class FilesController extends Controller
     private function uploaded(\Symfony\Component\HttpFoundation\File\UploadedFile $file)
     {
         $name = $this->upload->getName($file);
+
         $filename = $this->upload->save($file);
-        $creation = $this->upload->getCreationDate($file);
 
         $this->file->create(['name' => $name, 'filename' => $filename]);
 

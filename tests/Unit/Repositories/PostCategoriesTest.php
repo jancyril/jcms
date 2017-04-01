@@ -16,6 +16,7 @@ class PostCategoriesTest extends TestCase
         $data = $this->data()->toArray();
 
         $category = new PostCategories();
+
         $category->create($data);
 
         $this->assertDatabaseHas('post_categories', $data);
@@ -27,6 +28,7 @@ class PostCategoriesTest extends TestCase
         $data = $this->data()->toArray();
 
         $category = new PostCategories();
+
         $category->create($data);
 
         $category->update($category->id, ['name' => 'Sample Category']);
@@ -40,6 +42,7 @@ class PostCategoriesTest extends TestCase
         $data = $this->data()->toArray();
 
         $category = new PostCategories();
+
         $category->create($data);
 
         $category->delete($category->id);

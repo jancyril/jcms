@@ -16,6 +16,7 @@ class UsersTest extends TestCase
         $data = factory(\Janitor\Models\User::class)->make()->toArray();
 
         $user = new Users();
+
         $user->create(array_merge($data, ['password' => str_random(20)]));
 
         $this->assertDatabaseHas('users', $data);
@@ -27,6 +28,7 @@ class UsersTest extends TestCase
         $data = $this->create();
 
         $user = new Users();
+
         $user->update($data->id, ['firstname' => 'Juan Carlo']);
 
         $this->assertDatabaseHas('users', array_merge($data->toArray(), ['firstname' => 'Juan Carlo']));
@@ -38,6 +40,7 @@ class UsersTest extends TestCase
         $data = $this->create();
 
         $user = new Users();
+
         $user->delete($data->id);
 
         $this->assertDatabaseMissing('users', $data->toArray());
