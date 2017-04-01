@@ -24,9 +24,9 @@ class PostCategories extends BaseRepository
     {
         return $records->map(function ($record) {
             return [
-                $record->name,
-                $record->description,
-                $record->id,
+                'name' => $record->name,
+                'description' => $record->description,
+                'id' => $record->id,
             ];
         })->all();
     }
