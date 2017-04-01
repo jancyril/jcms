@@ -2,6 +2,9 @@
 
 namespace Janitor\Http\Controllers;
 
+use Janitor\Helpers\InfoResponse;
+use Janitor\Helpers\ErrorResponse;
+use Janitor\Helpers\SuccessfulResponse;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -44,16 +47,9 @@ class Controller extends BaseController
      *
      * @return array
      */
-    protected function success(string $message, array $data = []): array
+    protected function success(string $message, array $data = [])
     {
-        $content = [
-            'result' => true,
-            'type' => 'success',
-            'title' => 'Success',
-            'message' => $message,
-        ];
-
-        return empty($data) ? $content : array_merge($content, $data);
+        return new SuccessfulResponse($message, $data);
     }
 
     /**
@@ -63,16 +59,9 @@ class Controller extends BaseController
      *
      * @return array
      */
-    protected function error(string $message, array $data = []): array
+    protected function error(string $message, array $data = [])
     {
-        $content = [
-            'result' => false,
-            'type' => 'error',
-            'title' => 'Error',
-            'message' => $message,
-        ];
-
-        return empty($data) ? $content : array_merge($content, $data);
+        return new ErrorResponse($message, $data);
     }
 
     /**
@@ -82,15 +71,8 @@ class Controller extends BaseController
      *
      * @return array
      */
-    protected function info(string $message, array $data = []): array
+    protected function info(string $message, array $data = [])
     {
-        $content = [
-            'result' => true,
-            'type' => 'info',
-            'title' => 'Heads up',
-            'message' => $message,
-        ];
-
-        return empty($data) ? $content : array_merge($content, $data);
+        return new InfoResponse($message, $data);
     }
 }
