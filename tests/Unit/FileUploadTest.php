@@ -141,24 +141,6 @@ class FileUploadTest extends TestCase
         $this->assertFileNotExists(config('custom.asset_path').config('custom.upload_path').$filename);
     }
 
-    /** @test  **/
-    public function it_can_get_the_creation_or_modification_date_of_a_file()
-    {
-        $vfs = new Vfs();
-
-        file_put_contents($vfs->path('/jcms.csv'), 'Hello World');
-
-        $tempFile = new UploadedFile($vfs->path('/jcms.csv'), 'jcms.csv');
-
-        $file = new File();
-
-        $result = $file->getCreationDate($tempFile);
-
-        $created = \Carbon\Carbon::createFromTimestamp(filemtime($tempFile))->format('Y-m-d H:i:s');
-
-        $this->assertEquals($created, $result);
-    }
-
     private function mockFile($name = 'image.jpg', $ext = 'jpg', $size = '1024', $mime = 'image/jpeg')
     {
         return \Mockery::mock(

@@ -34,24 +34,6 @@ class FileUpload
     }
 
     /**
-     * This method will get the creation date of a file.
-     *
-     * @param object $file The file being uploaded
-     *
-     * @return bool|date_time
-     */
-    public function getCreationDate($file)
-    {
-        $date = filemtime($file);
-
-        if (!$date) {
-            return false;
-        }
-
-        return \Carbon\Carbon::createFromTimestamp($date)->format('Y-m-d H:i:s');
-    }
-
-    /**
      * This method will get the original name of the uploaded file.
      *
      * @param object $file The file being uploaded
