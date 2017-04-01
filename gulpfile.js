@@ -24,6 +24,7 @@ elixir(mix => {
         'bower_components/animate.css/animate.css',
         'bower_components/nprogress/nprogress.css',
         'bower_components/sweetalert/dist/sweetalert.css',
+        'bower_components/summernote/dist/summernote.css',
         'css/sb-admin-2.css'
     ], 'public/css/dashboard.css', 'resources/assets/');
 
@@ -39,6 +40,7 @@ elixir(mix => {
         'bower_components/datatables.net-bs/js/dataTables.bootstrap.js',
         'bower_components/sweetalert/dist/sweetalert.min.js',
         'bower_components/metisMenu/dist/metisMenu.js',
+        'bower_components/summernote/dist/summernote.js',
         'js/sb-admin-2.js'
     ], 'public/js/dashboard.js', 'resources/assets/');
 
@@ -65,8 +67,12 @@ elixir(mix => {
     mix.copy([
         'resources/assets/bower_components/fontawesome/fonts',
         'resources/assets/bower_components/bootstrap/fonts',
-        'resources/assets/bower_components/Ionicons/fonts'
+        'resources/assets/bower_components/Ionicons/fonts',
     ], 'public/fonts');
+
+    mix.copy([
+        'resources/assets/bower_components/summernote/dist/font'
+    ], 'public/css/font');
 
     /**
      * Add versioning for all asset files
