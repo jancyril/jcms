@@ -11,14 +11,14 @@ class Post extends Model
 
     protected $fillable = [
         'title', 'slug', 'excerpt', 'content',
-        'image', 'user_id', 'category_id',
+        'image', 'user_id', 'category_id', 'status',
     ];
 
     public function setSlugAttribute($slug)
     {
         $id = $this->attributes['id'] ?? '';
 
-        if ($id != '') {
+        if ($id) {
             $slug = $this->slugToUse($id);
         }
 

@@ -31,6 +31,7 @@ $factory->define(Janitor\Models\Post::class, function (Faker\Generator $faker) {
         'image' => str_random(10).'.jpg',
         'user_id' => factory(Janitor\Models\User::class)->create()->id,
         'category_id' => factory(Janitor\Models\PostCategory::class)->create()->id,
+        'status' => $faker->randomElement(['Draft', 'Published']),
     ];
 });
 
