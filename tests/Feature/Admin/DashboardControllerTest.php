@@ -12,15 +12,15 @@ class DashboardControllerTest extends TestCase
     /** @test **/
     public function it_can_go_to_admin_dashboard()
     {
-        $this->admin();
-
         $this->get(route('admin::dashboard'))
             ->assertSee('Dashboard')
             ->assertStatus(200);
     }
 
-    private function admin()
+    protected function setUp()
     {
+        parent::setUp();
+
         $user = factory(\Janitor\Models\User::class)->create();
 
         $this->actingAs($user);

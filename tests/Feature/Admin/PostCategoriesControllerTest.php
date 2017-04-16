@@ -12,8 +12,6 @@ class PostCategoriesControllerTest extends TestCase
     /** @test **/
     public function it_can_go_to_post_categories_index_page()
     {
-        $this->admin();
-
         $this->get(route('admin::post-categories'))
             ->assertSee('Post Categories')
             ->assertStatus(200);
@@ -22,8 +20,6 @@ class PostCategoriesControllerTest extends TestCase
     /** @test **/
     public function adding_a_new_post_category_will_fail_if_name_is_empty()
     {
-        $this->admin();
-
         $this->post(route('admin::post-post-category'), ['name' => ''])
             ->assertSessionHasErrors();
     }
@@ -33,8 +29,6 @@ class PostCategoriesControllerTest extends TestCase
     {
         $this->create(['name' => 'Sample Category']);
 
-        $this->admin();
-
         $this->post(route('admin::post-post-category'), $this->make(['name' => 'Sample Category'])->toArray())
             ->assertSessionHasErrors();
     }
@@ -42,8 +36,6 @@ class PostCategoriesControllerTest extends TestCase
     /** @test **/
     public function adding_a_new_post_category_will_succeed_if_all_data_are_valid()
     {
-        $this->admin();
-
         $this->post(route('admin::post-post-category'), $this->make()->toArray())
             ->assertSee('Success')
             ->assertStatus(200);
@@ -53,8 +45,6 @@ class PostCategoriesControllerTest extends TestCase
     public function updating_a_post_category_will_fail_if_name_is_empty()
     {
         $category = $this->create();
-
-        $this->admin();
 
         $this->put(route('admin::put-post-category', ['id' => $category->id]), ['name' => ''])
             ->assertSessionHasErrors();
@@ -67,8 +57,6 @@ class PostCategoriesControllerTest extends TestCase
 
         $category = $this->create();
 
-        $this->admin();
-
         $this->put(route('admin::put-post-category', ['id' => $category->id]), ['name' => 'Sample Category'])
             ->assertSessionHasErrors();
     }
@@ -77,8 +65,6 @@ class PostCategoriesControllerTest extends TestCase
     public function updating_a_post_category_will_succeed_if_all_data_are_valid()
     {
         $category = $this->create();
-
-        $this->admin();
 
         $this->put(route('admin::put-post-category', ['id' => $category->id]), $category->toArray())
             ->assertSee('Success')
@@ -90,11 +76,16 @@ class PostCategoriesControllerTest extends TestCase
     {
         $category = $this->create();
 
-        $this->admin();
-
         $this->delete(route('admin::delete-post-category', ['id' => $category->id]))
             ->assertSee('Success')
             ->assertStatus(200);
+    }
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->admin();
     }
 
     private function make(array $overrides = [])
