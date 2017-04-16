@@ -3,8 +3,6 @@
  * This is the abstract BaseRepository class that will be extended by all other concrete classes.
  * This contains basic and commonly used database operations.
  *
- * PHP 7
- *
  * @author Jan Cyril Segubience <jancyril@segubience.com>
  */
 
