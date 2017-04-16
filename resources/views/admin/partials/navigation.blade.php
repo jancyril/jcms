@@ -25,7 +25,13 @@
           <a href="#"><i class="fa fa-file-text-o fa-fw"></i> Posts<span class="fa arrow"></span></a>
           <ul class="nav nav-second-level">
             <li>
-              <a href="{{ route('admin::post-categories') }}">Categories</a>
+              <a href="{{ route('admin::posts') }}"><i class="fa fa-file-text-o fa-fw"></i> All Posts</a>
+            </li>
+            <li>
+              <a href="{{ route('admin::new-post') }}"><i class="fa fa-pencil-square-o fa-fw"></i> New Post</a>
+            </li>
+            <li>
+              <a href="{{ route('admin::post-categories') }}"><i class="fa fa-list fa-fw"></i> Categories</a>
             </li>
           </ul>
         </li>
