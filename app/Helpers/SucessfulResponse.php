@@ -4,7 +4,7 @@ namespace Janitor\Helpers;
 
 use Illuminate\Http\Response;
 
-class SuccessfulResponse extends Response
+class SucessfulResponse extends Response
 {
     public function __construct(string $message, array $data = [], int $status = 200, array $headers = [])
     {
