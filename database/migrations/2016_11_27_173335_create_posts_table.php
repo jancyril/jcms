@@ -22,7 +22,7 @@ class CreatePostsTable extends Migration
             $table->string('image');
             $table->integer('user_id')->unsigned();
             $table->integer('category_id')->unsigned();
-            $table->string('status', 20)->default('draft');
+            $table->string('status', 20)->default('unpublished');
             $table->timestamps();
 
             $table->foreign('user_id')
