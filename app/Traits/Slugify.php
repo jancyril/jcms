@@ -93,5 +93,5 @@ trait Slugify
         }
     }
 
-    abstract public function slugToUse($id);
+    abstract protected function slugToUse($id);
 }

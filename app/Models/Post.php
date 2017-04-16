@@ -25,7 +25,7 @@ class Post extends Model
         $this->attributes['slug'] = $this->slugify($slug, $id);
     }
 
-    public function slugToUse($id)
+    protected function slugToUse($id)
     {
         $title = $this->attributes['title'];
         $slug = $this->attributes['slug'];
