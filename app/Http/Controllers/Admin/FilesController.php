@@ -5,7 +5,9 @@ namespace Janitor\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Janitor\Helpers\FileUpload;
 use Janitor\Repositories\Files;
+use Illuminate\Support\Collection;
 use Janitor\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FilesController extends Controller
 {
@@ -72,11 +74,13 @@ class FilesController extends Controller
      */
     public function store(Request $request)
     {
-        if (empty($request->input('files'))) {
+        $files = $request['files'];
+
+        if (empty($files)) {
             return $this->error('No file has been selected');
         }
 
-        $original = collect($request->input('files'));
+        $original = collect($files);
 
         if (!$collection = $this->allowed($original)) {
             return $this->error('The file you are uploading is not allowed.', ['title' => 'Upload failed']);
@@ -127,7 +131,7 @@ class FilesController extends Controller
      *
      * @return bool|object
      */
-    private function allowed(\Illuminate\Support\Collection $collection)
+    private function allowed(Collection $collection)
     {
         $files = $collection->filter(function ($file) {
             return $this->upload->isFileTypeAllowed($file, $this->types);
@@ -147,7 +151,7 @@ class FilesController extends Controller
      *
      * @return bool|object
      */
-    private function validSize(\Illuminate\Support\Collection $collection)
+    private function validSize(Collection $collection)
     {
         $files = $collection->filter(function ($file) {
             return $this->maxSize >= $this->upload->getSize($file);
@@ -168,7 +172,7 @@ class FilesController extends Controller
      *
      * @return object|mixed
      */
-    private function filenames(\Illuminate\Support\Collection $collection, $original)
+    private function filenames(Collection $collection, $original)
     {
         $count = $collection->count();
 
@@ -213,7 +217,7 @@ class FilesController extends Controller
      *
      * @return array
      */
-    private function uploaded(\Symfony\Component\HttpFoundation\File\UploadedFile $file)
+    private function uploaded(UploadedFile $file)
     {
         $name = $this->upload->getName($file);
 

@@ -3,6 +3,7 @@
 namespace Test\Feature\Admin;
 
 use Tests\TestCase;
+use VirtualFileSystem\Wrapper;
 use VirtualFileSystem\FileSystem as Vfs;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -14,9 +15,13 @@ class FilesControllerTest extends TestCase
     /** @test  **/
     public function it_will_not_proceed_if_file_type_is_not_allowed()
     {
-        $this->admin();
+        $vfs = new Vfs();
 
-        $this->post(route('admin::post-file'), ['files' => [$this->file('sample.mov')]])
+        file_put_contents($vfs->path('/sample.mov'), '');
+
+        $file = new UploadedFile($vfs->path('/sample.mov'), 'sample.mov');
+
+        $this->post(route('admin::post-file'), ['files' => [$file]])
             ->assertSee('error')
             ->assertStatus(200);
     }
@@ -24,9 +29,13 @@ class FilesControllerTest extends TestCase
     /** @test  **/
     public function it_will_not_proceed_if_file_size_exceeds_the_allowable_limit()
     {
-        $this->admin();
+        $vfs = new Vfs();
 
-        $this->post(route('admin::post-file'), ['files' => [$this->file('sample.jpg', 1024 * 1024 * 100)]])
+        file_put_contents($vfs->path('/sample.jpg'), '');
+
+        $file = new UploadedFile($vfs->path('/sample.jpg'), 'sample.jpg', '', 1024 * 1024 * 100);
+
+        $this->post(route('admin::post-file'), ['files' => [$file]])
             ->assertSee('error')
             ->assertStatus(200);
     }
@@ -39,8 +48,6 @@ class FilesControllerTest extends TestCase
         file_put_contents($vfs->path('/sample.jpg'), '');
 
         $file = new UploadedFile($vfs->path('/sample.jpg'), 'sample.jpg');
-
-        $admin = $this->admin();
 
         $this->post(route('admin::post-file'), ['files' => [$file]])
             ->assertSee('sample.jpg')
@@ -60,8 +67,6 @@ class FilesControllerTest extends TestCase
         $files[] = new UploadedFile($vfs->path('/sample.csv'), 'sample.csv');
 
         $files[] = new UploadedFile($vfs->path('/photo.csv'), 'photo.csv');
-
-        $this->admin();
 
         $this->post(route('admin::post-file'), ['files' => $files])
             ->assertSee('sample.csv')
@@ -86,8 +91,6 @@ class FilesControllerTest extends TestCase
         $files[] = new UploadedFile($vfs->path('/sample.php'), 'sample.php');
 
         $files[] = new UploadedFile($vfs->path('/photo.csv'), 'photo.csv');
-
-        $admin = $this->admin();
 
         $this->post(route('admin::post-file'), ['files' => $files])
             ->assertSee('sample.csv')
@@ -114,8 +117,6 @@ class FilesControllerTest extends TestCase
 
         $files[] = new UploadedFile($vfs->path('/photo.csv'), 'photo.csv');
 
-        $admin = $this->admin();
-
         $response = $this->post(route('admin::post-file'), ['files' => $files])
                         ->assertSee('sample.csv')
                         ->assertSee('photo.csv')
@@ -132,8 +133,6 @@ class FilesControllerTest extends TestCase
         file_put_contents($vfs->path('/data.csv'), 'Hey there');
 
         $file = new UploadedFile($vfs->path('/data.csv'), 'data.csv');
-
-        $this->admin();
 
         $result = $this->post(route('admin::post-file'), ['files' => [$file]]);
 
@@ -153,8 +152,6 @@ class FilesControllerTest extends TestCase
 
         $file = new UploadedFile($vfs->path('/data.csv'), 'data.csv');
 
-        $this->admin();
-
         $result = $this->post(route('admin::post-file'), ['files' => [$file]]);
 
         $this->delete(route('admin::delete-file', ['file' => $result->original[1]['filename']]))
@@ -162,7 +159,14 @@ class FilesControllerTest extends TestCase
             ->assertStatus(200);
     }
 
-    public function tearDown()
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->admin();
+    }
+
+    protected function tearDown()
     {
         exec('rm -rf '.config('custom.asset_path').config('custom.upload_path'));
     }
@@ -174,16 +178,5 @@ class FilesControllerTest extends TestCase
         $this->actingAs($user);
 
         return $user;
-    }
-
-    private function file($filename = 'sample.jpg', $size = 1000 * 1000 * 1, $mime = 'application/octet-stream')
-    {
-        $vfs = new Vfs();
-
-        file_put_contents($vfs->path('/'.$filename), '');
-
-        $file = new UploadedFile($vfs->path('/'.$filename), $filename, $mime, $size);
-
-        return $file;
     }
 }
