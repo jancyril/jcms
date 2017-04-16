@@ -1,6 +1,10 @@
 @extends('admin.master')
-@include('admin.partials.vue_headers')
+@include('admin.javascript.vue_headers')
 @include('admin.posts.javascript.categories')
+
+@section('customcss')
+  <link rel="stylesheet" href="{{ asset('bower/datatables.net-bs/css/dataTables.bootstrap.css') }}">
+@endsection
 
 @section('content')
 <div class="row" style="margin-bottom: 20px;">
@@ -85,6 +89,8 @@
 @endsection
 
 @section('customjs')
+  <script src="{{ asset('bower/datatables.net/js/jquery.dataTables.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('bower/datatables.net-bs/js/dataTables.bootstrap.js') }}" charset="utf-8"></script>
   @yield('vue_headers')
   @yield('categories_js')
 @endsection
