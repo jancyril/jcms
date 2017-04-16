@@ -4,6 +4,8 @@
 /public/js
 /public/build
 /public/fonts
+/public/bower
+/public/uploads
 /vendor
 /.idea
 Homestead.json
