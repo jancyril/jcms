@@ -10,10 +10,26 @@ use Janitor\Repositories\PostCategories;
 
 class PostsController extends Controller
 {
+    /**
+     * Property that will hold the instance of Illuminate\Http\Request.
+     *
+     * @var object
+     */
     protected $request;
 
+    /**
+     * Property that will hold the instance of Janitor\Repositories\Posts.
+     *
+     * @var object
+     */
     private $post;
 
+    /**
+     * Class constructor.
+     *
+     * @param Request $request
+     * @param Posts   $post
+     */
     public function __construct(Request $request, Posts $post)
     {
         $this->request = $request;
@@ -47,5 +63,38 @@ class PostsController extends Controller
         }
 
         return $this->success('New post has been successfully created.');
+    }
+
+    public function edit(PostCategories $categories, int $id)
+    {
+        if (!$post = $this->post->findById($id)) {
+            abort(404);
+        }
+
+        $data = [
+            'pageTitle' => $post->title,
+            'post' => $post,
+            'categories' => $categories->get(),
+        ];
+
+        return $this->admin('posts.edit', $data);
+    }
+
+    public function update(Post $validation, int $id)
+    {
+        if (!$this->post->update($id, $this->request->all())) {
+            return $this->error('Unable to save changes, please try again.');
+        }
+
+        return $this->success('Changes has been successfully saved.');
+    }
+
+    public function destroy(int $id)
+    {
+        if (!$this->post->delete($id)) {
+            return $this->error('Unable to delete post, please try again.');
+        }
+
+        return $this->success('Post has been successfully deleted.');
     }
 }

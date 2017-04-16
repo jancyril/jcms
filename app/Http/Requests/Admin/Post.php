@@ -13,7 +13,7 @@ class Post extends Request
      */
     public function authorize()
     {
-        return auth()->check() ?? false;
+        return auth()->check();
     }
 
     public function post()
@@ -29,6 +29,36 @@ class Post extends Request
                 'required',
                 'integer',
             ],
+            'status' => [
+                'required',
+            ],
+        ];
+    }
+
+    public function put()
+    {
+        return [
+            'title' => [
+                'required',
+            ],
+            'content' => [
+                'required',
+            ],
+            'category_id' => [
+                'required',
+                'integer',
+            ],
+            'status' => [
+                'required',
+            ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'category_id.required' => 'The category field is required.',
+            'category_id.integer' => 'The category field must be an integer.',
         ];
     }
 }

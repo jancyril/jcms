@@ -27,7 +27,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin::', 'm
     Route::get('posts', 'PostsController@index')->name('posts');
     Route::get('posts/get', 'PostsController@get')->name('get-posts');
     Route::get('posts/new', 'PostsController@create')->name('new-post');
-    Route::post('posts/new', 'PostsController@store')->name('post-post');
+    Route::post('posts/new', 'PostsController@store')->name('post-new-post');
+    Route::get('posts/{id}/edit', 'PostsController@edit')->name('edit-post');
+    Route::put('posts/{id}/edit', 'PostsController@update')->name('put-post');
+    Route::delete('posts/delete/{id}', 'PostsController@destroy')->name('delete-post');
 
     // Routes for post categories
     Route::get('post-categories', 'PostCategoriesController@index')->name('post-categories');

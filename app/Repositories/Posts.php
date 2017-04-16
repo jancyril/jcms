@@ -2,7 +2,9 @@
 
 namespace Janitor\Repositories;
 
+use Janitor\Models\Post;
 use Janitor\Traits\DataTables;
+use Illuminate\Database\Eloquent\Collection;
 
 class Posts extends BaseRepository
 {
@@ -10,7 +12,14 @@ class Posts extends BaseRepository
 
     protected function model()
     {
-        return \Janitor\Models\Post::class;
+        return Post::class;
+    }
+
+    public function create(array $data)
+    {
+        $data['user_id'] = $data['user_id'] ?? auth()->user()->id;
+
+        return parent::create($data);
     }
 
     /**
@@ -20,13 +29,15 @@ class Posts extends BaseRepository
      *
      * @return array
      */
-    protected function map(\Illuminate\Database\Eloquent\Collection $records): array
+    protected function map(Collection $records): array
     {
         return $records->map(function ($record) {
             return [
-                $record->title,
-                $record->created_at->format('F d, Y H:i'),
-                $record->id,
+                'title' => $record->title,
+                'date' => $record->created_at->format('F d, Y H:i'),
+                'status' => ucwords($record->status),
+                'url' => route('admin::edit-post', $record->id),
+                'id' => $record->id,
             ];
         })->all();
     }

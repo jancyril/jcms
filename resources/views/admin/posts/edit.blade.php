@@ -1,7 +1,7 @@
 @extends('admin.master')
 @include('admin.javascript.vue_headers')
 @include('admin.javascript.summernote')
-@include('admin.posts.javascript.create')
+@include('admin.posts.javascript.edit')
 
 @section('customcss')
   <link rel="stylesheet" href="{{ asset('bower/summernote/dist/summernote.css') }}">
@@ -25,13 +25,13 @@
       </div>
       <div class="form-group">
         <label for="content" class="control-label">Content</label>
-        <textarea id="texteditor" name="content" rows="10" class="form-control"></textarea>
+        <textarea id="texteditor" name="content" rows="10" class="form-control">{!!$post->content !!}</textarea>
       </div>
     </div>
     <div class="col-xs-4">
       <div class="form-group">
         <label for="slug" class="control-label">Slug</label>
-        <input type="text" id="slug" name="slug" value="" class="form-control" placeholder="Custom slug" v-model="form.slug" />
+        <input type="text" id="slug" name="slug" class="form-control" placeholder="Custom slug" v-model="form.slug" />
       </div>
       <div class="form-group">
         <label for="excerpt" class="control-label">Excerpt</label>
@@ -40,7 +40,6 @@
       <div class="form-group">
         <label for="category_id">Category</label>
         <select id="category_id" class="form-control" name="category_id" v-model="form.category_id">
-          <option value="" selected disabled>Please select a category</option>
           @if($categories)
             @foreach($categories as $category)
               <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -51,7 +50,6 @@
       <div class="form-group">
         <label for="status">Status</label>
         <select id="status" class="form-control" name="status" v-model="form.status">
-          <option value="" selected disabled>Please select a status</option>
           <option value="published">Published</option>
           <option value="unpublished">Unpublished</option>
         </select>
@@ -80,5 +78,5 @@
   <script src="{{ asset('bower/bootstrap-filestyle/src/bootstrap-filestyle.js') }}" charset="utf-8"></script>
   @yield('vue_headers')
   @yield('summernote')
-  @yield('create_js')
+  @yield('edit_js')
 @endsection
