@@ -1,4 +1,6 @@
 <script type="text/javascript">
+var imageURL = "{{ config('custom.asset_url') }}";
+
 function notify(response) {
   new PNotify({
     styling: 'fontawesome',
